@@ -120,6 +120,9 @@ class RouterosAPI
                     }
                 }
                 fclose($this->socket);
+                if(isset($RESPONSE[1]) && preg_match('/=message=(.*?)$/', $RESPONSE[1], $matches_err)) {
+                    throw new \Exception($matches_err[1]);
+                }
             }
             sleep($this->delay);
         }
