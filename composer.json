@@ -1,5 +1,5 @@
 {
-    "name": "krok/routeros-api",
+    "name": "meklis/routeros-api",
     "description": "Client API for RouterOS/Mikrotik",
     "keywords": [
         "routeros",

@@ -109,6 +109,7 @@ class RouterosAPI
                         if ($MATCHES[0][0] == 'ret' && strlen($MATCHES[0][1]) == 32) {
                             $this->write('/login', false);
                             $this->write('=name=' . $login, false);
+                            $this->write('=password=' . $password, false);
                             $this->write('=response=00' . md5(chr(0) . $password . pack('H*', $MATCHES[0][1])));
                             $RESPONSE = $this->read(false);
                             if ($RESPONSE[0] == '!done') {
@@ -119,6 +120,9 @@ class RouterosAPI
                     }
                 }
                 fclose($this->socket);
+                if(isset($RESPONSE[1]) && preg_match('/=message=(.*?)$/', $RESPONSE[1], $matches_err)) {
+                    throw new \Exception($matches_err[1]);
+                }
             }
             sleep($this->delay);
         }
